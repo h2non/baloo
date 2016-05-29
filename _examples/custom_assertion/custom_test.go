@@ -11,6 +11,13 @@ import (
 // test stores the HTTP testing client preconfigured
 var test = baloo.New().URL("http://httpbin.org")
 
+func assert(r *gentleman.Response, req *http.Request) error {
+	if r.StatusCode >= 400 {
+		return errors.New("Invalid server response (> 400)")
+	}
+	return nil
+}
+
 func TestBalooClient(t *testing.T) {
 	test.Get("/foo").
 		SetHeader("Foo", "Bar").
@@ -18,11 +25,6 @@ func TestBalooClient(t *testing.T) {
 		Expect(t).
 		Status(200).
 		Type("json").
-		AssertFunc(func(r *gentleman.Response, req *http.Request) error {
-			if r.StatusCode >= 400 {
-				return errors.New("Invalid server response (> 400)")
-			}
-			return nil
-		}).
+		AssertFunc(assert).
 		Done()
 }
