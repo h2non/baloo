@@ -5,6 +5,8 @@ Built on top of [gentleman](https://github.com/h2non/gentleman) HTTP client tool
 
 Take a look to the [examples](#examples) to get started.
 
+**Note**: still beta.
+
 ## Features
 
 - Versatile built-in expectations.
