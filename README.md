@@ -1,6 +1,6 @@
 # baloo [![Build Status](https://travis-ci.org/h2non/baloo.png)](https://travis-ci.org/h2non/baloo) [![GitHub release](https://img.shields.io/badge/version-1.0.0-orange.svg?style=flat)](https://github.com/h2non/baloo/releases) [![GoDoc](https://godoc.org/github.com/h2non/baloo?status.svg)](https://godoc.org/github.com/h2non/baloo) [![Coverage Status](https://coveralls.io/repos/github/h2non/baloo/badge.svg?branch=master)](https://coveralls.io/github/h2non/baloo?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/baloo)](https://goreportcard.com/report/github.com/h2non/baloo)
 
-Expressive and versatile End-to-End HTTP API testing made easy in [Go](http://golang.org).
+Expressive and versatile End-to-End HTTP API testing made easy in [Go](http://golang.org) (golang).
 Built on top of [gentleman](https://github.com/h2non/gentleman) HTTP client toolkit.
 
 Take a look to the [examples](#examples) to get started.
@@ -23,6 +23,7 @@ Take a look to the [examples](#examples) to get started.
 
 ## Upcoming features
 
+- [ ] JSON expectations using deep comparison.
 - [ ] JSON Schema body expectations.
 - [ ] Cookies expectations.
 - [ ] Response timing expectations.
