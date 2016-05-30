@@ -34,44 +34,50 @@ func (c *Client) Request() *Request {
 }
 
 // Get creates a new GET request.
-func (c *Client) Get() *Request {
+func (c *Client) Get(path string) *Request {
 	req := c.Request()
 	req.Method("GET")
+	req.Path(path)
 	return req
 }
 
 // Post creates a new POST request.
-func (c *Client) Post() *Request {
+func (c *Client) Post(path string) *Request {
 	req := c.Request()
 	req.Method("POST")
+	req.Path(path)
 	return req
 }
 
 // Put creates a new PUT request.
-func (c *Client) Put() *Request {
+func (c *Client) Put(path string) *Request {
 	req := c.Request()
 	req.Method("PUT")
+	req.Path(path)
 	return req
 }
 
 // Delete creates a new DELETE request.
-func (c *Client) Delete() *Request {
+func (c *Client) Delete(path string) *Request {
 	req := c.Request()
 	req.Method("DELETE")
+	req.Path(path)
 	return req
 }
 
 // Patch creates a new PATCH request.
-func (c *Client) Patch() *Request {
+func (c *Client) Patch(path string) *Request {
 	req := c.Request()
 	req.Method("PATCH")
+	req.Path(path)
 	return req
 }
 
 // Head creates a new HEAD request.
-func (c *Client) Head() *Request {
+func (c *Client) Head(path string) *Request {
 	req := c.Request()
 	req.Method("HEAD")
+	req.Path(path)
 	return req
 }
 
