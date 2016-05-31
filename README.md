@@ -1,6 +1,6 @@
 # baloo [![Build Status](https://travis-ci.org/h2non/baloo.png)](https://travis-ci.org/h2non/baloo) [![GitHub release](https://img.shields.io/badge/version-0.1.0-orange.svg?style=flat)](https://github.com/h2non/baloo/releases) [![GoDoc](https://godoc.org/github.com/h2non/baloo?status.svg)](https://godoc.org/github.com/h2non/baloo) [![Coverage Status](https://coveralls.io/repos/github/h2non/baloo/badge.svg?branch=master)](https://coveralls.io/github/h2non/baloo?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/baloo)](https://goreportcard.com/report/github.com/h2non/baloo)
 
-Expressive and versatile End-to-End HTTP API testing made easy in [Go](http://golang.org) (golang).
+Expressive and versatile end-to-end HTTP API testing made easy in [Go](http://golang.org) (golang).
 Built on top of [gentleman](https://github.com/h2non/gentleman) HTTP client toolkit.
 
 Take a look to the [examples](#examples) to get started.
@@ -23,9 +23,7 @@ Take a look to the [examples](#examples) to get started.
 
 ## Upcoming features
 
-- [ ] JSON expectations using deep comparison.
 - [ ] JSON Schema body expectations.
-- [ ] Cookies expectations.
 - [ ] Response timing expectations.
 
 ## Installation
@@ -84,6 +82,12 @@ Asserts a response header field with the given value.
 
 Asserts if a header field is present in the response.
 
+#### BodyEquals(value string)
+
+Asserts a response body as string using strict comparison.
+
+Regular expressions can be used as value to perform the specific assertions.
+
 #### BodyMatchString(pattern string)
 
 Asserts a response body matching a string expression.
@@ -92,9 +96,9 @@ Regular expressions can be used as value to perform the specific assertions.
 
 #### BodyLength(length int)
 
-Asserts a response body length.
+Asserts the response body length.
 
-#### AssertFunc(func (*gentleman.Response, *context.Context) error)
+#### AssertFunc(func (*http.Response, *http.Request) error)
 
 Adds a new custom assertion function who should return an 
 detailed error in case that the assertion fails.
@@ -181,6 +185,16 @@ go get -u ./...
 Run tests:
 ```bash
 go test ./...
+```
+
+Lint code:
+```bash
+go test ./...
+```
+
+Run example:
+```bash
+go test ./_examples/simple/simple_test.go
 ```
 
 ## License 

@@ -34,6 +34,32 @@ func BodyMatchString(pattern string) Func {
 	}
 }
 
+// BodyEquals asserts as strict equality comparison the
+// response body with a given string string.
+func BodyEquals(value string) Func {
+	return func(res *http.Response, req *http.Request) error {
+		body, err := readBody(res)
+		if err != nil {
+			return err
+		}
+
+		bodyStr := string(body)
+		err = fmt.Errorf("Bodies mismatch:\n\thave: %#v\n\twant: %#v\n", bodyStr, value)
+
+		// Remove line feed sequence
+		if len(bodyStr) > 0 && bodyStr[len(bodyStr)-1] == '\n' {
+			bodyStr = bodyStr[:len(bodyStr)-1]
+		}
+
+		// Perform the comparison
+		if len(bodyStr) != len(value) || value != bodyStr {
+			return err
+		}
+
+		return nil
+	}
+}
+
 // BodyLength asserts a response body length.
 func BodyLength(length int) Func {
 	return func(res *http.Response, req *http.Request) error {
@@ -48,7 +74,7 @@ func BodyLength(length int) Func {
 		}
 		// Match body length
 		if cl != length {
-			return fmt.Errorf("Body length mismatch: '%d' should be equal '%d'", cl, length)
+			return fmt.Errorf("Body length mismatch: '%d' should be equal to '%d'", cl, length)
 		}
 		return nil
 	}

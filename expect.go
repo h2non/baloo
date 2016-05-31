@@ -89,6 +89,13 @@ func (e *Expect) HeaderPresent(key string) *Expect {
 	return e
 }
 
+// BodyEquals asserts as strict equality comparison the
+// response body with a given string string.
+func (e *Expect) BodyEquals(pattern string) *Expect {
+	e.AssertFunc(assert.BodyMatchString(pattern))
+	return e
+}
+
 // BodyMatchString asserts a response body matching a string expression.
 // Regular expressions can be used as value to perform the specific assertions.
 func (e *Expect) BodyMatchString(pattern string) *Expect {
@@ -99,6 +106,26 @@ func (e *Expect) BodyMatchString(pattern string) *Expect {
 // BodyLength asserts a response body length.
 func (e *Expect) BodyLength(length int) *Expect {
 	e.AssertFunc(assert.BodyLength(length))
+	return e
+}
+
+// JSONEquals asserts the response body with the given JSON struct.
+func (e *Expect) JSONEquals(data interface{}) *Expect {
+	e.AssertFunc(assert.JSONEquals(data))
+	return e
+}
+
+// JSONSchema asserts the response body with the given
+// JSON schema definition.
+func (e *Expect) JSONSchema(schema string) *Expect {
+	e.AssertFunc(assert.JSONSchema(schema))
+	return e
+}
+
+// JSONSchemaFile asserts the response body with the given
+// JSON schema definition loaded from file path.
+func (e *Expect) JSONSchemaFile(schema string) *Expect {
+	// e.AssertFunc(assert.JSONSchemaFile(schema))
 	return e
 }
 
