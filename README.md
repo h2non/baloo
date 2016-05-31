@@ -21,11 +21,6 @@ Take a look to the [examples](#examples) to get started.
 - Middleware-oriented via gentleman's [middleware layer](https://github.com/h2non/gentleman#middleware).
 - Extensible and hackable API.
 
-## Upcoming features
-
-- [ ] JSON Schema body expectations.
-- [ ] Response timing expectations.
-
 ## Installation
 
 ```bash

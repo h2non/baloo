@@ -29,6 +29,12 @@ func StatusClientError() Func {
 	return StatusRange(400, 499)
 }
 
+// StatusRedirect asserts the response status code as
+// server redirect status (= 301 || = 302).
+func StatusRedirect() Func {
+	return StatusRange(301, 302)
+}
+
 // StatusEqual asserts the response status code with the given number.
 func StatusEqual(code int) Func {
 	return func(res *http.Response, req *http.Request) error {

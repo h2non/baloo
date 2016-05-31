@@ -77,15 +77,39 @@ func (e *Expect) Header(key, value string) *Expect {
 	return e
 }
 
-// HeaderEquals asserts a response header field value.
+// HeaderEquals asserts a response header field value
+// is equal to the given value.
 func (e *Expect) HeaderEquals(key, value string) *Expect {
 	e.AssertFunc(assert.HeaderEquals(key, value))
 	return e
 }
 
-// HeaderPresent asserts if a header field is present in the response.
+// HeaderNotEquals asserts that a response header field value
+// is not equal to the given one.
+func (e *Expect) HeaderNotEquals(key, value string) *Expect {
+	e.AssertFunc(assert.HeaderNotEquals(key, value))
+	return e
+}
+
+// HeaderPresent asserts if a header field is present
+// in the response.
 func (e *Expect) HeaderPresent(key string) *Expect {
 	e.AssertFunc(assert.HeaderPresent(key))
+	return e
+}
+
+// HeaderNotPresent asserts if a header field is not
+// present in the response.
+func (e *Expect) HeaderNotPresent(key string) *Expect {
+	e.AssertFunc(assert.HeaderNotPresent(key))
+	return e
+}
+
+// RedirectTo asserts the server response redirects
+// to the given URL pattern.
+// Regular expressions are supported.
+func (e *Expect) RedirectTo(uri string) *Expect {
+	e.AssertFunc(assert.RedirectTo(uri))
 	return e
 }
 
@@ -124,7 +148,7 @@ func (e *Expect) JSONSchema(schema string) *Expect {
 
 // JSONSchemaFile asserts the response body with the given
 // JSON schema definition loaded from file path.
-func (e *Expect) JSONSchemaFile(schema string) *Expect {
+func (e *Expect) JSONSchemaSource(schema string) *Expect {
 	// e.AssertFunc(assert.JSONSchemaFile(schema))
 	return e
 }
