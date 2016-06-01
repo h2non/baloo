@@ -28,7 +28,7 @@ func BodyMatchString(pattern string) Func {
 			return err
 		}
 		if match, _ := regexp.MatchString(pattern, string(body)); !match {
-			return fmt.Errorf("Body mismatch: cannot match pattern '%s'", pattern)
+			return fmt.Errorf("Body mismatch: pattern not found '%s'", pattern)
 		}
 		return nil
 	}

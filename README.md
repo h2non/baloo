@@ -5,16 +5,15 @@ Built on top of [gentleman](https://github.com/h2non/gentleman) HTTP client tool
 
 Take a look to the [examples](#examples) to get started.
 
-**Note**: still beta.
-
 ## Features
 
 - Versatile built-in expectations.
 - Extensible custom expectations.
 - Declarative, expressive, fluent API.
-- Full-featured HTTP client built on top of [gentleman](https://github.com/h2non/gentleman).
+- Full-featured HTTP client built on top of [gentleman](https://github.com/h2non/gentleman) toolkit.
 - Intuitive and semantic HTTP client DSL.
 - Easy to configure and use.
+- Composable chainable assertions.
 - Works with Go's `testing` package (more test engines might be added in the future).
 - Convenient helpers and abstractions over Go's HTTP primitives.
 - Built-in JSON, XML and multipart bodies definition and expectation.
@@ -24,7 +23,7 @@ Take a look to the [examples](#examples) to get started.
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/baloo.v1
+go get -u gopkg.in/h2non/baloo.v0
 ```
 
 ## API
@@ -73,9 +72,17 @@ Regular expressions can be used as value to perform the specific assertions.
 
 Asserts a response header field with the given value.
 
+#### HeaderNotEquals(key, value string)
+
+Asserts that a response header field is not equal to the given value.
+
 #### HeaderPresent(key string)
 
 Asserts if a header field is present in the response.
+
+#### HeaderNotPresent(key string)
+
+Asserts if a header field is not present in the response.
 
 #### BodyEquals(value string)
 
@@ -92,6 +99,17 @@ Regular expressions can be used as value to perform the specific assertions.
 #### BodyLength(length int)
 
 Asserts the response body length.
+
+#### JSON(match interface{})
+
+Asserts the response body with the given JSON struct.
+
+#### JSONSchema(schema string)
+
+Asserts the response body againts the given JSON schema definition.
+
+`data` argument can be a `string` containing the JSON schema, a file path 
+or an URL pointing to the JSON schema definition.
 
 #### AssertFunc(func (*http.Response, *http.Request) error)
 

@@ -11,7 +11,7 @@ import (
 	"gopkg.in/h2non/gentleman.v1/plugins/multipart"
 )
 
-const (
+var (
 	// UserAgent represents the static user agent name and version.
 	UserAgent = "baloo/" + Version
 )

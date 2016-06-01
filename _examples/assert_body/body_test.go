@@ -1,4 +1,4 @@
-package simple
+package assert_body
 
 import (
 	"testing"
@@ -9,13 +9,13 @@ import (
 // test stores the HTTP testing client preconfigured
 var test = baloo.New().URL("http://httpbin.org")
 
-func TestBalooSimple(t *testing.T) {
-	test.Get("/get").
+func TestBalooBodyAssertion(t *testing.T) {
+	test.Get("/headers").
 		SetHeader("Foo", "Bar").
 		Expect(t).
 		Status(200).
-		Header("Server", "apache").
 		Type("json").
-		JSON(map[string]string{"bar": "foo"}).
+		BodyMatchString(`"Foo"`).
+		BodyMatchString(`"Bar"`).
 		Done()
 }

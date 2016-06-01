@@ -116,7 +116,7 @@ func (e *Expect) RedirectTo(uri string) *Expect {
 // BodyEquals asserts as strict equality comparison the
 // response body with a given string string.
 func (e *Expect) BodyEquals(pattern string) *Expect {
-	e.AssertFunc(assert.BodyMatchString(pattern))
+	e.AssertFunc(assert.BodyEquals(pattern))
 	return e
 }
 
@@ -133,9 +133,9 @@ func (e *Expect) BodyLength(length int) *Expect {
 	return e
 }
 
-// JSONEquals asserts the response body with the given JSON struct.
-func (e *Expect) JSONEquals(data interface{}) *Expect {
-	e.AssertFunc(assert.JSONEquals(data))
+// JSON asserts the response body with the given JSON struct.
+func (e *Expect) JSON(data interface{}) *Expect {
+	e.AssertFunc(assert.JSON(data))
 	return e
 }
 
@@ -143,13 +143,6 @@ func (e *Expect) JSONEquals(data interface{}) *Expect {
 // JSON schema definition.
 func (e *Expect) JSONSchema(schema string) *Expect {
 	e.AssertFunc(assert.JSONSchema(schema))
-	return e
-}
-
-// JSONSchemaFile asserts the response body with the given
-// JSON schema definition loaded from file path.
-func (e *Expect) JSONSchemaSource(schema string) *Expect {
-	// e.AssertFunc(assert.JSONSchemaFile(schema))
 	return e
 }
 
@@ -177,6 +170,11 @@ func (e *Expect) Done() error {
 	}
 
 	return err
+}
+
+// End is an alias to `Done()`.
+func (e *Expect) End() error {
+	return e.Done()
 }
 
 func (e *Expect) run(res *http.Response, req *http.Request) error {

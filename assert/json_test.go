@@ -11,26 +11,26 @@ import (
 
 type items map[string]string
 
-func TestJSONEqualsString(t *testing.T) {
+func TestJSONString(t *testing.T) {
 	body := ioutil.NopCloser(bytes.NewBufferString(`{"foo":"bar"}`))
 	res := &http.Response{Body: body}
 	match := `{"foo": "bar"}`
-	st.Expect(t, JSONEquals(match)(res, nil), nil)
+	st.Expect(t, JSON(match)(res, nil), nil)
 }
 
-func TestJSONEqualsBuffer(t *testing.T) {
+func TestJSONBuffer(t *testing.T) {
 	body := ioutil.NopCloser(bytes.NewBufferString(`{"foo":"bar"}`))
 	res := &http.Response{Body: body}
 	match := []byte(`{"foo": "bar"}`)
-	st.Expect(t, JSONEquals(match)(res, nil), nil)
+	st.Expect(t, JSON(match)(res, nil), nil)
 }
 
-func TestJSONEqualsMap(t *testing.T) {
+func TestJSONMap(t *testing.T) {
 	body := ioutil.NopCloser(bytes.NewBufferString(`{"foo": [{"bar":"baz"}]}`))
 	res := &http.Response{Body: body}
 	list := []items{{"bar": "baz"}}
 	match := map[string]interface{}{"foo": list}
-	st.Expect(t, JSONEquals(match)(res, nil), nil)
+	st.Expect(t, JSON(match)(res, nil), nil)
 }
 
 func TestCompare(t *testing.T) {

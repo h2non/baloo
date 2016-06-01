@@ -96,9 +96,9 @@ func compare(body map[string]interface{}, data interface{}) error {
 	return nil
 }
 
-// JSONEquals deeply and strictly compares the JSON
+// JSON deeply and strictly compares the JSON
 // response body with the given JSON structure.
-func JSONEquals(data interface{}) Func {
+func JSON(data interface{}) Func {
 	return func(res *http.Response, req *http.Request) error {
 		// Read and unmarshal response body as JSON
 		body, err := unmarshalBody(res)
