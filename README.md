@@ -28,6 +28,108 @@ Take a look to the [examples](#examples) to get started.
 go get -u gopkg.in/h2non/baloo.v0
 ```
 
+## Examples
+
+See [examples](https://github.com/h2non/baloo/blob/master/_examples) directory for featured examples.
+
+#### Simple request expectation
+
+```go
+package simple
+
+import (
+  "testing"
+
+  "gopkg.in/h2non/baloo.v0"
+)
+
+// test stores the HTTP testing client preconfigured
+var test = baloo.New().URL("http://httpbin.org")
+
+func TestBalooSimple(t *testing.T) {
+  test.Get("/get").
+    SetHeader("Foo", "Bar").
+    Expect(t).
+    Status(200).
+    Header("Server", "apache").
+    Type("json").
+    JSON(map[string]string{"bar": "foo"}).
+    Done()
+}
+```
+
+#### Custom assertion function
+
+```go
+package custom_assertion
+
+import (
+  "errors"
+  "net/http"
+  "testing"
+
+  "gopkg.in/h2non/baloo.v0"
+)
+
+// test stores the HTTP testing client preconfigured
+var test = baloo.New().URL("http://httpbin.org")
+
+// assert implements an assertion function with custom validation logic.
+// If the assertion fails it should return an error.
+func assert(res *http.Response, req *http.Request) error {
+  if res.StatusCode >= 400 {
+    return errors.New("Invalid server response (> 400)")
+  }
+  return nil
+}
+
+func TestBalooClient(t *testing.T) {
+  test.Post("/post").
+    SetHeader("Foo", "Bar").
+    JSON(map[string]string{"foo": "bar"}).
+    Expect(t).
+    Status(200).
+    Type("json").
+    AssertFunc(assert).
+    Done()
+}
+```
+
+#### JSON Schema assertion
+
+```go
+package json_schema
+
+import (
+  "testing"
+
+  "gopkg.in/h2non/baloo.v0"
+)
+
+const schema = `{
+  "title": "Example Schema",
+  "type": "object",
+  "properties": {
+    "origin": {
+      "type": "string"
+    }
+  },
+  "required": ["origin"]
+}`
+
+// test stores the HTTP testing client preconfigured
+var test = baloo.New().URL("http://httpbin.org")
+
+func TestJSONSchema(t *testing.T) {
+  test.Get("/ip").
+    Expect(t).
+    Status(200).
+    Type("json").
+    JSONSchema(schema).
+    Done()
+}
+```
+
 ## API
 
 See [godoc reference](https://godoc.org/github.com/h2non/baloo) for detailed API documentation.
@@ -117,73 +219,6 @@ or an URL pointing to the JSON schema definition.
 
 Adds a new custom assertion function who should return an 
 detailed error in case that the assertion fails.
-
-## Examples
-
-See [examples](https://github.com/h2non/baloo/blob/master/_examples) directory for featured examples.
-
-#### Simple request expectation
-
-```go
-package simple
-
-import (
-  "testing"
-
-  "gopkg.in/h2non/baloo.v0"
-)
-
-// test stores the HTTP testing client preconfigured
-var test = baloo.New().URL("http://httpbin.org")
-
-func TestBalooSimple(t *testing.T) {
-  test.Get("/get").
-    SetHeader("Foo", "Bar").
-    Expect(t).
-    Status(200).
-    Header("Server", "apache").
-    Type("json").
-    JSON(map[string]string{"bar": "foo"}).
-    Done()
-}
-```
-
-#### Custom assertion function
-
-```go
-package custom_assertion
-
-import (
-  "errors"
-  "net/http"
-  "testing"
-
-  "gopkg.in/h2non/baloo.v0"
-)
-
-// test stores the HTTP testing client preconfigured
-var test = baloo.New().URL("http://httpbin.org")
-
-// assert implements an assertion function with custom validation logic.
-// If the assertion fails it should return an error.
-func assert(res *http.Response, req *http.Request) error {
-  if res.StatusCode >= 400 {
-    return errors.New("Invalid server response (> 400)")
-  }
-  return nil
-}
-
-func TestBalooClient(t *testing.T) {
-  test.Post("/post").
-    SetHeader("Foo", "Bar").
-    JSON(map[string]string{"foo": "bar"}).
-    Expect(t).
-    Status(200).
-    Type("json").
-    AssertFunc(assert).
-    Done()
-}
-```
 
 ## Development
 
