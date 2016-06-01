@@ -19,7 +19,6 @@ Take a look to the [examples](#examples) to get started.
 - Composable chainable assertions.
 - Works with Go's `testing` package (more test engines might be added in the future).
 - Convenient helpers and abstractions over Go's HTTP primitives.
-- Built-in JSON, XML and multipart bodies definition and expectation.
 - Middleware-oriented via gentleman's [middleware layer](https://github.com/h2non/gentleman#middleware).
 - Extensible and hackable API.
 
