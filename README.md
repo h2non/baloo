@@ -11,7 +11,8 @@ Take a look to the [examples](#examples) to get started.
 - Extensible custom expectations.
 - Declarative, expressive, fluent API.
 - Response body matching and strict equality expectations.
-- JSON and JSON Schema expectations.
+- Deep JSON comparison.
+- JSON Schema validation.
 - Full-featured HTTP client built on top of [gentleman](https://github.com/h2non/gentleman) toolkit.
 - Intuitive and semantic HTTP client DSL.
 - Easy to configure and use.
