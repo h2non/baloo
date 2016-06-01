@@ -7,7 +7,7 @@ import (
 )
 
 // test stores the HTTP testing client preconfigured
-var test = baloo.New().URL("http://httpbin.org")
+var test = baloo.New("http://httpbin.org")
 
 func TestBalooBodyAssertion(t *testing.T) {
 	test.Get("/headers").

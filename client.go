@@ -22,8 +22,10 @@ type Client struct {
 
 // New creates a new high level client entity
 // able to perform HTTP requests.
-func New() *Client {
-	return &Client{Client: gentleman.New()}
+func New(url string) *Client {
+	cli := gentleman.New()
+	cli.URL(url)
+	return &Client{Client: cli}
 }
 
 // Request creates a new Request based on the current Client

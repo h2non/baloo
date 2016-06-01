@@ -17,11 +17,11 @@ func TestClientMiddlewareContext(t *testing.T) {
 		h.Next(ctx)
 	}
 
-	cli := New()
+	cli := New("")
 	cli.UseRequest(fn)
 	cli.UseResponse(fn)
-	if len(cli.Client.Middleware.GetStack()) != 2 {
-		t.Error("Invalid middleware stack length")
+	if l := len(cli.Client.Middleware.GetStack()); l != 3 {
+		t.Errorf("Invalid middleware stack length: %d", l)
 	}
 
 	ctx := context.New()
@@ -31,8 +31,8 @@ func TestClientMiddlewareContext(t *testing.T) {
 }
 
 func TestClientInheritance(t *testing.T) {
-	parent := New()
-	cli := New()
+	parent := New("")
+	cli := New("")
 	cli.UseParent(parent)
 
 	parent.UseRequest(func(ctx *context.Context, h context.Handler) {
@@ -57,7 +57,7 @@ func TestClientRequestMiddleware(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	client := New()
+	client := New("")
 	client.UseRequest(func(ctx *context.Context, h context.Handler) {
 		ctx.Request.Header.Set("Client", "go")
 		h.Next(ctx)
@@ -83,7 +83,7 @@ func TestClientRequestResponseMiddleware(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	client := New()
+	client := New("")
 	client.UseRequest(func(c *context.Context, h context.Handler) {
 		c.Request.Header.Set("Client", "go")
 		h.Next(c)
@@ -102,7 +102,7 @@ func TestClientRequestResponseMiddleware(t *testing.T) {
 }
 
 func TestClientErrorMiddleware(t *testing.T) {
-	client := New()
+	client := New("")
 	client.UseRequest(func(c *context.Context, h context.Handler) {
 		c.Error = errors.New("foo error")
 		h.Next(c)
@@ -120,7 +120,7 @@ func TestClientErrorMiddleware(t *testing.T) {
 }
 
 func TestClientCustomPhaseMiddleware(t *testing.T) {
-	client := New()
+	client := New("")
 	client.UseRequest(func(c *context.Context, h context.Handler) {
 		c.Error = errors.New("foo error")
 		h.Next(c)
@@ -138,7 +138,7 @@ func TestClientCustomPhaseMiddleware(t *testing.T) {
 }
 
 func TestClientMethod(t *testing.T) {
-	cli := New()
+	cli := New("")
 	cli.Method("POST")
 	cli.Client.Middleware.Run("request", cli.Client.Context)
 	st.Expect(t, cli.Client.Context.Request.Method, "POST")
@@ -146,7 +146,7 @@ func TestClientMethod(t *testing.T) {
 
 func TestClientURL(t *testing.T) {
 	url := "http://foo.com"
-	cli := New()
+	cli := New("")
 	cli.URL(url)
 	cli.Client.Middleware.Run("request", cli.Client.Context)
 	st.Expect(t, cli.Client.Context.Request.URL.String(), url)
@@ -154,7 +154,7 @@ func TestClientURL(t *testing.T) {
 
 func TestClientBaseURL(t *testing.T) {
 	url := "http://foo.com/bar/baz"
-	cli := New()
+	cli := New("")
 	cli.BaseURL(url)
 	cli.Client.Middleware.Run("request", cli.Client.Context)
 	st.Expect(t, cli.Client.Context.Request.URL.String(), "http://foo.com")
@@ -163,7 +163,7 @@ func TestClientBaseURL(t *testing.T) {
 func TestClientPath(t *testing.T) {
 	url := "http://foo.com/bar/baz"
 	path := "/foo/baz"
-	cli := New()
+	cli := New("")
 	cli.URL(url)
 	cli.Path(path)
 	cli.Client.Middleware.Run("request", cli.Client.Context)
@@ -173,7 +173,7 @@ func TestClientPath(t *testing.T) {
 func TestClientPathParam(t *testing.T) {
 	url := "http://foo.com/bar/baz"
 	path := "/:foo/bar/:baz"
-	cli := New()
+	cli := New("")
 	cli.URL(url)
 	cli.Path(path)
 	cli.Param("foo", "baz")
@@ -185,7 +185,7 @@ func TestClientPathParam(t *testing.T) {
 func TestClientPathParams(t *testing.T) {
 	url := "http://foo.com/bar/baz"
 	path := "/:foo/bar/:baz"
-	cli := New()
+	cli := New("")
 	cli.URL(url)
 	cli.Path(path)
 	cli.Params(map[string]string{"foo": "baz", "baz": "foo"})
@@ -194,14 +194,14 @@ func TestClientPathParams(t *testing.T) {
 }
 
 func TestClientSetHeader(t *testing.T) {
-	cli := New()
+	cli := New("")
 	cli.SetHeader("foo", "bar")
 	cli.Client.Middleware.Run("request", cli.Client.Context)
 	st.Expect(t, cli.Client.Context.Request.Header.Get("foo"), "bar")
 }
 
 func TestClientAddHeader(t *testing.T) {
-	cli := New()
+	cli := New("")
 	cli.AddHeader("foo", "baz")
 	cli.AddHeader("foo", "bar")
 	cli.Client.Middleware.Run("request", cli.Client.Context)
@@ -209,7 +209,7 @@ func TestClientAddHeader(t *testing.T) {
 }
 
 func TestClientSetHeaders(t *testing.T) {
-	cli := New()
+	cli := New("")
 	cli.SetHeaders(map[string]string{"foo": "baz", "baz": "foo"})
 	cli.Client.Middleware.Run("request", cli.Client.Context)
 	st.Expect(t, cli.Client.Context.Request.Header.Get("foo"), "baz")
@@ -217,7 +217,7 @@ func TestClientSetHeaders(t *testing.T) {
 }
 
 func TestClientAddCookie(t *testing.T) {
-	cli := New()
+	cli := New("")
 	cookie := &http.Cookie{Name: "foo", Value: "bar"}
 	cli.AddCookie(cookie)
 	cli.Client.Middleware.Run("request", cli.Client.Context)
@@ -225,7 +225,7 @@ func TestClientAddCookie(t *testing.T) {
 }
 
 func TestClientAddCookies(t *testing.T) {
-	cli := New()
+	cli := New("")
 	cookies := []*http.Cookie{{Name: "foo", Value: "bar"}}
 	cli.AddCookies(cookies)
 	cli.Client.Middleware.Run("request", cli.Client.Context)
@@ -233,49 +233,49 @@ func TestClientAddCookies(t *testing.T) {
 }
 
 func TestClientCookieJar(t *testing.T) {
-	cli := New()
+	cli := New("")
 	cli.CookieJar()
 	cli.Client.Middleware.Run("request", cli.Client.Context)
 	st.Reject(t, cli.Client.Context.Client.Jar, nil)
 }
 
 func TestClientVerbMethods(t *testing.T) {
-	cli := New()
+	cli := New("")
 	req := cli.Get("")
 	req.Request.Middleware.Run("request", req.Request.Context)
 	if req.Request.Context.Request.Method != "GET" {
 		t.Errorf("Invalid request method: %s", req.Request.Context.Request.Method)
 	}
 
-	cli = New()
+	cli = New("")
 	req = cli.Post("")
 	req.Request.Middleware.Run("request", req.Request.Context)
 	if req.Request.Context.Request.Method != "POST" {
 		t.Errorf("Invalid request method: %s", req.Request.Context.Request.Method)
 	}
 
-	cli = New()
+	cli = New("")
 	req = cli.Put("")
 	req.Request.Middleware.Run("request", req.Request.Context)
 	if req.Request.Context.Request.Method != "PUT" {
 		t.Errorf("Invalid request method: %s", req.Request.Context.Request.Method)
 	}
 
-	cli = New()
+	cli = New("")
 	req = cli.Delete("")
 	req.Request.Middleware.Run("request", req.Request.Context)
 	if req.Request.Context.Request.Method != "DELETE" {
 		t.Errorf("Invalid request method: %s", req.Request.Context.Request.Method)
 	}
 
-	cli = New()
+	cli = New("")
 	req = cli.Patch("")
 	req.Request.Middleware.Run("request", req.Request.Context)
 	if req.Request.Context.Request.Method != "PATCH" {
 		t.Errorf("Invalid request method: %s", req.Request.Context.Request.Method)
 	}
 
-	cli = New()
+	cli = New("")
 	req = cli.Head("")
 	req.Request.Middleware.Run("request", req.Request.Context)
 	if req.Request.Context.Request.Method != "HEAD" {

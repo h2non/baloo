@@ -33,7 +33,7 @@ func TestRealRequest(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	cli := New().URL(ts.URL)
+	cli := New(ts.URL)
 	cli.Get("/foo").
 		SetHeader("Foo", "Bar").
 		Expect(t).

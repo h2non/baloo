@@ -45,7 +45,7 @@ import (
 )
 
 // test stores the HTTP testing client preconfigured
-var test = baloo.New().URL("http://httpbin.org")
+var test = baloo.New("http://httpbin.org")
 
 func TestBalooSimple(t *testing.T) {
   test.Get("/get").
@@ -73,7 +73,7 @@ import (
 )
 
 // test stores the HTTP testing client preconfigured
-var test = baloo.New().URL("http://httpbin.org")
+var test = baloo.New("http://httpbin.org")
 
 // assert implements an assertion function with custom validation logic.
 // If the assertion fails it should return an error.
@@ -119,7 +119,7 @@ const schema = `{
 }`
 
 // test stores the HTTP testing client preconfigured
-var test = baloo.New().URL("http://httpbin.org")
+var test = baloo.New("http://httpbin.org")
 
 func TestJSONSchema(t *testing.T) {
   test.Get("/ip").

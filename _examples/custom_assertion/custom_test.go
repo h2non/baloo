@@ -9,7 +9,7 @@ import (
 )
 
 // test stores the HTTP testing client preconfigured
-var test = baloo.New().URL("http://httpbin.org")
+var test = baloo.New("http://httpbin.org")
 
 func assert(res *http.Response, req *http.Request) error {
 	if res.StatusCode >= 400 {
