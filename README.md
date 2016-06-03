@@ -144,19 +144,19 @@ Asserts the response HTTP status code to be equal.
 
 Asserts the response HTTP status to be within the given numeric range.
 
-#### StatusOk(start, end int)
+#### StatusOk()
 
 Asserts the response HTTP status to be a valid server response (>= 200 && < 400).
 
-#### StatusError(start, end int)
+#### StatusError()
 
 Asserts the response HTTP status to be a valid clint/server error response (>= 400 && < 600).
 
-#### StatusServerError(start, end int)
+#### StatusServerError()
 
 Asserts the response HTTP status to be a valid server error response (>= 500 && < 600).
 
-#### StatusClientError(start, end int)
+#### StatusClientError()
 
 Asserts the response HTTP status to be a valid client error response (>= 400 && < 500).
 
@@ -212,12 +212,12 @@ Asserts the response body with the given JSON struct.
 
 Asserts the response body againts the given JSON schema definition.
 
-`data` argument can be a `string` containing the JSON schema, a file path 
+`data` argument can be a `string` containing the JSON schema, a file path
 or an URL pointing to the JSON schema definition.
 
 #### AssertFunc(func (*http.Response, *http.Request) error)
 
-Adds a new custom assertion function who should return an 
+Adds a new custom assertion function who should return an
 detailed error in case that the assertion fails.
 
 ## Development
@@ -247,6 +247,6 @@ Run example:
 go test ./_examples/simple/simple_test.go
 ```
 
-## License 
+## License
 
 MIT - Tomas Aparicio
