@@ -135,3 +135,23 @@ func TestRealRequest(t *testing.T) {
 		AssertFunc(assertStatus).
 		Done()
 }
+
+func TestGlobalAssertFunc(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json; encoding=utf8")
+		fmt.Fprintln(w, "Hello, "+r.Header.Get("Foo"))
+	}))
+	defer ts.Close()
+
+	AddAssertFunc("foo", assertStatus)
+	defer FlushAssertFuncs()
+
+	cli := New(ts.URL)
+	cli.Get("/foo").
+		SetHeader("Foo", "Bar").
+		Expect(t).
+		Status(200).
+		Type("json").
+		Assert("foo").
+		Done()
+}

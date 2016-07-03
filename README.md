@@ -1,6 +1,7 @@
 # baloo [![Build Status](https://travis-ci.org/h2non/baloo.png)](https://travis-ci.org/h2non/baloo) [![GitHub release](https://img.shields.io/badge/version-0.1.0-orange.svg?style=flat)](https://github.com/h2non/baloo/releases) [![GoDoc](https://godoc.org/github.com/h2non/baloo?status.svg)](https://godoc.org/github.com/h2non/baloo) [![Coverage Status](https://coveralls.io/repos/github/h2non/baloo/badge.svg?branch=master)](https://coveralls.io/github/h2non/baloo?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/baloo)](https://goreportcard.com/report/github.com/h2non/baloo)
 
 Expressive and versatile end-to-end HTTP API testing made easy in [Go](http://golang.org) (golang).
+
 Built on top of [gentleman](https://github.com/h2non/gentleman) HTTP client toolkit.
 
 Take a look to the [examples](#examples) to get started.
@@ -126,6 +127,46 @@ func TestJSONSchema(t *testing.T) {
     Status(200).
     Type("json").
     JSONSchema(schema).
+    Done()
+}
+```
+
+#### Custom global assertion by alias
+
+```go
+package alias_assertion
+
+import (
+  "errors"
+  "net/http"
+  "testing"
+
+  "gopkg.in/h2non/baloo.v0"
+)
+
+// test stores the HTTP testing client preconfigured
+var test = baloo.New("http://httpbin.org")
+
+func assert(res *http.Response, req *http.Request) error {
+  if res.StatusCode >= 400 {
+    return errors.New("Invalid server response (> 400)")
+  }
+  return nil
+}
+
+func init() {
+  // Register assertion function at global level
+  baloo.AddAssertFunc("test", assert)
+}
+
+func TestBalooClient(t *testing.T) {
+  test.Post("/post").
+    SetHeader("Foo", "Bar").
+    JSON(map[string]string{"foo": "bar"}).
+    Expect(t).
+    Status(200).
+    Type("json").
+    Assert("test").
     Done()
 }
 ```

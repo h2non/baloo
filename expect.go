@@ -8,6 +8,22 @@ import (
 	"gopkg.in/h2non/baloo.v0/assert"
 )
 
+// Assertions stores global assertion functions by alias name.
+// Use Expect.Assert('<assertion name>') to use
+// new assertion at request expectation level.
+var Assertions = make(map[string]assert.Func)
+
+// Adds a new assertion function at global level by alias name.
+// Then you can trigger the assertion function in any expectation test.
+func AddAssertFunc(name string, fn assert.Func) {
+	Assertions[name] = fn
+}
+
+// FlushAssertFuncs flushes registered assertion functions.
+func FlushAssertFuncs() {
+	Assertions = make(map[string]assert.Func)
+}
+
 // Expect represents the HTTP expectation suite who is
 // able to define multiple assertion functions to match the response.
 type Expect struct {
@@ -143,6 +159,20 @@ func (e *Expect) JSON(data interface{}) *Expect {
 // JSON schema definition.
 func (e *Expect) JSONSchema(schema string) *Expect {
 	e.AssertFunc(assert.JSONSchema(schema))
+	return e
+}
+
+// Assert adds a new assertion function by alias name.
+// Assertion function must be previosly registered
+// via baloo.AddAssertFunc("alias", function).
+func (e *Expect) Assert(assertions ...string) *Expect {
+	for _, alias := range assertions {
+		fn, ok := Assertions[alias]
+		if !ok {
+			panic("No assertion function registered by alias: " + alias)
+		}
+		e.assertions = append(e.assertions, fn)
+	}
 	return e
 }
 
