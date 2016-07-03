@@ -15,6 +15,6 @@ func TestBalooJSONAssertion(t *testing.T) {
 		Expect(t).
 		Status(200).
 		Type("json").
-		JSON(`{"user-agent":"baloo/0.1.0"}`).
+		JSON(`{"user-agent":"baloo/` + baloo.Version + `"}`).
 		Done()
 }
