@@ -18,7 +18,7 @@ func assert(res *http.Response, req *http.Request) error {
 	return nil
 }
 
-func TestBalooClient(t *testing.T) {
+func TestBalooCustomAssertion(t *testing.T) {
 	test.Post("/post").
 		SetHeader("Foo", "Bar").
 		JSON(map[string]string{"foo": "bar"}).

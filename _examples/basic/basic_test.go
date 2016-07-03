@@ -16,6 +16,5 @@ func TestBalooBasic(t *testing.T) {
 		Status(200).
 		Header("Server", "nginx").
 		Type("json").
-		JSON(map[string]string{"bar": "foo"}).
 		Done()
 }

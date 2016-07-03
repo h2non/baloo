@@ -9,7 +9,7 @@ import (
 // test stores the HTTP testing client preconfigured
 var test = baloo.New("http://httpbin.org")
 
-func TestBalooBasic(t *testing.T) {
+func TestBalooHeaders(t *testing.T) {
 	test.Get("/get").
 		SetHeader("Foo", "Bar").
 		Expect(t).
@@ -17,6 +17,5 @@ func TestBalooBasic(t *testing.T) {
 		Header("Server", "nginx").
 		Header("Content-Type", "json").
 		Type("json").
-		JSON(map[string]string{"bar": "foo"}).
 		Done()
 }
