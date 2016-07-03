@@ -13,7 +13,7 @@ import (
 // new assertion at request expectation level.
 var Assertions = make(map[string]assert.Func)
 
-// Adds a new assertion function at global level by alias name.
+// AddAssertFunc adds a new assertion function at global level by alias name.
 // Then you can trigger the assertion function in any expectation test.
 func AddAssertFunc(name string, fn assert.Func) {
 	Assertions[name] = fn
