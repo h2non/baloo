@@ -20,3 +20,5 @@ sloc:
 
 update:
 	go get -u ./...
+
+.PHONY: lint test
