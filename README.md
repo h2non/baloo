@@ -256,6 +256,15 @@ Asserts the response body againts the given JSON schema definition.
 `data` argument can be a `string` containing the JSON schema, a file path
 or an URL pointing to the JSON schema definition.
 
+#### Assert(alias string)
+
+Assert adds a new assertion function by alias name.
+
+Assertion function must be previosly registered
+via baloo.AddAssertFunc("alias", function).
+
+See [an example here](#custom-global-assertion-by-alias).
+
 #### AssertFunc(func (*http.Response, *http.Request) error)
 
 Adds a new custom assertion function who should return an
