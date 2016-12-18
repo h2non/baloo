@@ -3,7 +3,7 @@ package json_schema
 import (
 	"testing"
 
-	"gopkg.in/h2non/baloo.v0"
+	"gopkg.in/h2non/baloo.v1"
 )
 
 const schema = `{

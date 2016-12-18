@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"testing"
 
-	"gopkg.in/h2non/baloo.v0"
+	"gopkg.in/h2non/baloo.v1"
 )
 
 // test stores the HTTP testing client preconfigured
