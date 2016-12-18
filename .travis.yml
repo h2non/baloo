@@ -12,8 +12,8 @@ before_install:
   - go get -u -v github.com/axw/gocov/gocov
   - go get -u -v github.com/mattn/goveralls
   - go get -u -v github.com/golang/lint/golint
-  - mkdir -p $GOPATH/src/gopkg.in/h2non/baloo.v1
-  - ln -s $(pwd)/. $GOPATH/src/gopkg.in/h2non/baloo.v1
+  - mkdir -p $GOPATH/src/gopkg.in/h2non
+  - ln -s $(pwd) $GOPATH/src/gopkg.in/h2non/baloo.v1
 
 script:
   - diff -u <(echo -n) <(gofmt -s -d ./)
