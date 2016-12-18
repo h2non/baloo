@@ -28,7 +28,7 @@ func BodyMatchString(pattern string) Func {
 			return err
 		}
 		if match, _ := regexp.MatchString(pattern, string(body)); !match {
-			return fmt.Errorf("Body mismatch: pattern not found '%s'", pattern)
+			return fmt.Errorf("body mismatch: pattern not found '%s'", pattern)
 		}
 		return nil
 	}
@@ -44,7 +44,7 @@ func BodyEquals(value string) Func {
 		}
 
 		bodyStr := string(body)
-		err = fmt.Errorf("Bodies mismatch:\n\thave: %#v\n\twant: %#v\n", bodyStr, value)
+		err = fmt.Errorf("bodies mismatch:\n\thave: %#v\n\twant: %#v\n", bodyStr, value)
 
 		// Remove line feed sequence
 		if len(bodyStr) > 0 && bodyStr[len(bodyStr)-1] == '\n' {
@@ -74,7 +74,7 @@ func BodyLength(length int) Func {
 		}
 		// Match body length
 		if cl != length {
-			return fmt.Errorf("Body length mismatch: '%d' should be equal to '%d'", cl, length)
+			return fmt.Errorf("body length mismatch: '%d' should be equal to '%d'", cl, length)
 		}
 		return nil
 	}

@@ -90,7 +90,7 @@ func compare(body map[string]interface{}, data interface{}) error {
 
 	// Compare by byte sequences
 	if !reflect.DeepEqual(bodyBuf, matchBuf) {
-		return fmt.Errorf("JSON mismatch:\n\thave: %#v\n\twant: %#v\n", string(bodyBuf), string(matchBuf))
+		return fmt.Errorf("failed due to JSON mismatch:\n\thave: %#v\n\twant: %#v\n", string(bodyBuf), string(matchBuf))
 	}
 
 	return nil
