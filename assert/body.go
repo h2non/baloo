@@ -44,7 +44,7 @@ func BodyEquals(value string) Func {
 		}
 
 		bodyStr := string(body)
-		err = fmt.Errorf("bodies mismatch:\n\thave: %#v\n\twant: %#v\n", bodyStr, value)
+		err = fmt.Errorf("bodies mismatch:\n\thave: %#v\n\twant: %#v", bodyStr, value)
 
 		// Remove line feed sequence
 		if len(bodyStr) > 0 && bodyStr[len(bodyStr)-1] == '\n' {
