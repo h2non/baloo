@@ -3,9 +3,9 @@ package baloo
 import (
 	"net/http"
 
-	"gopkg.in/h2non/gentleman.v1"
-	"gopkg.in/h2non/gentleman.v1/context"
-	"gopkg.in/h2non/gentleman.v1/plugin"
+	"gopkg.in/h2non/gentleman.v2"
+	"gopkg.in/h2non/gentleman.v2/context"
+	"gopkg.in/h2non/gentleman.v2/plugin"
 )
 
 // NewHandler is a convenient alias to gentleman.NewHandler factory.
