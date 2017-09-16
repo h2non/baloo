@@ -34,6 +34,10 @@ Take a look to the [examples](#examples) to get started.
 go get -u gopkg.in/h2non/baloo.v2
 ```
 
+## Requirements
+
+- Go 1.7+
+
 ## Examples
 
 See [examples](https://github.com/h2non/baloo/blob/master/_examples) directory for featured examples.
