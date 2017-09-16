@@ -14,7 +14,7 @@ func TestBalooHeaders(t *testing.T) {
 		SetHeader("Foo", "Bar").
 		Expect(t).
 		Status(200).
-		Header("Server", "nginx").
+		Header("Server", "meinheld").
 		Header("Content-Type", "json").
 		Type("json").
 		Done()
