@@ -23,6 +23,11 @@ Take a look to the [examples](#examples) to get started.
 - Middleware-oriented via gentleman's [middleware layer](https://github.com/h2non/gentleman#middleware).
 - Extensible and hackable API.
 
+## Versions
+
+- [v2](https://github.com/h2non/baloo) - Latest stable version. Uses `gentleman@v2`. Recommended.
+- [v1](https://github.com/h2non/baloo/tree/v1) - First version. Stable. Uses `gentleman@v1`. Actively maintained. 
+
 ## Installation
 
 ```bash
