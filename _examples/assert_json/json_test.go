@@ -18,3 +18,17 @@ func TestBalooJSONAssertion(t *testing.T) {
 		JSON(`{"user-agent":"baloo/` + baloo.Version + `"}`).
 		Done()
 }
+
+func TestBalooJSONCustomAssertion(t *testing.T) {
+	test.Get("/user-agent").
+		SetHeader("Foo", "Bar").
+		Expect(t).
+		Status(200).
+		Type("json").
+		JSON(`{"user-agent":"baloo/` + baloo.Version + `"}`).
+		VerifyJSON(func(data map[string]interface{}) error {
+			// check your json response here
+			return nil
+		}).
+		Done()
+}

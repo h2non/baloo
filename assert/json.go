@@ -10,6 +10,9 @@ import (
 	"reflect"
 )
 
+// convert types take an int and return a string value.
+type FnJsonVerify func(map[string]interface{}) error
+
 func unmarshal(buf []byte) (map[string]interface{}, error) {
 	data := make(map[string]interface{})
 	if err := json.Unmarshal(buf, &data); err != nil {
@@ -23,6 +26,7 @@ func unmarshalBody(res *http.Response) (map[string]interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
+	res.Body = ioutil.NopCloser(bytes.NewBuffer(body))
 	if len(body) == 0 {
 		return nil, nil
 	}
@@ -107,5 +111,19 @@ func JSON(data interface{}) Func {
 		}
 
 		return compare(body, data)
+	}
+}
+
+// VerifyJSON extract Json in body and call fn with result
+// write your own test on data
+func VerifyJSON(fn FnJsonVerify) Func {
+	return func(res *http.Response, req *http.Request) error {
+		// Read and unmarshal response body as JSON
+		body, err := unmarshalBody(res)
+		if err != nil {
+			return err
+		}
+
+		return fn(body)
 	}
 }
