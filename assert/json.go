@@ -114,7 +114,7 @@ func JSON(data interface{}) Func {
 	}
 }
 
-// VerifyJSON extract Json in body and call fn with result
+// VerifyJSON extract JSON in body and call fn with result
 // write your own test on data
 func VerifyJSON(fn FnJsonVerify) Func {
 	return func(res *http.Response, req *http.Request) error {
