@@ -204,7 +204,6 @@ func (e *Expect) Done() error {
 	err = e.run(res.RawResponse, res.RawRequest)
 	if err != nil {
 		logerrorf(e.test, err.Error())
-		//e.test.Error(err)
 		Dump(e.test, res.RawResponse)
 
 	}
