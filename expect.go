@@ -157,7 +157,7 @@ func (e *Expect) JSON(data interface{}) *Expect {
 
 // VerifyJSON  asserts the response body with the given function
 // write your own test on data
-func (e *Expect) VerifyJSON(fn assert.FnJsonVerify) *Expect {
+func (e *Expect) VerifyJSON(fn assert.FnJSONVerify) *Expect {
 	e.AssertFunc(assert.VerifyJSON(fn))
 	return e
 }

@@ -10,8 +10,8 @@ import (
 	"reflect"
 )
 
-// convert types take an int and return a string value.
-type FnJsonVerify func(map[string]interface{}) error
+// FnJSONVerify callable function that take a JSON map, test this data and can return an error.
+type FnJSONVerify func(map[string]interface{}) error
 
 func unmarshal(buf []byte) (map[string]interface{}, error) {
 	data := make(map[string]interface{})
@@ -116,7 +116,7 @@ func JSON(data interface{}) Func {
 
 // VerifyJSON extract JSON in body and call fn with result
 // write your own test on data
-func VerifyJSON(fn FnJsonVerify) Func {
+func VerifyJSON(fn FnJSONVerify) Func {
 	return func(res *http.Response, req *http.Request) error {
 		// Read and unmarshal response body as JSON
 		body, err := unmarshalBody(res)

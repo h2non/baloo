@@ -14,17 +14,17 @@ import (
 )
 
 var scanStackForFile = true
-var logf_func = logf
+var logfFunc = logf
 
 const noStackOffset = 0
 
 // Logf adds the actual file:line information to the log message
 func Logf(t *testing.T, format string, args ...interface{}) {
-	logf_func(t, noStackOffset, "\n"+format, args...)
+	logfFunc(t, noStackOffset, "\n"+format, args...)
 }
 
 func logfatal(t *testing.T, format string, args ...interface{}) {
-	logf_func(t, noStackOffset, format, args...)
+	logfFunc(t, noStackOffset, format, args...)
 	t.FailNow()
 }
 
@@ -34,7 +34,7 @@ func logerror(t *testing.T, args ...interface{}) {
 }
 
 func logerrorf(t *testing.T, format string, args ...interface{}) {
-	logf_func(t, noStackOffset, format, args...)
+	logfFunc(t, noStackOffset, format, args...)
 	t.Fail()
 }
 

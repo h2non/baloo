@@ -1,10 +1,17 @@
 package assert_json
 
 import (
+	"fmt"
+	"strings"
 	"testing"
 
+	"github.com/mitchellh/mapstructure"
 	baloo "gopkg.in/h2non/baloo.v2"
 )
+
+type UserAgent struct {
+	Value string `mapstructure:"user-agent"`
+}
 
 // test stores the HTTP testing client preconfigured
 var test = baloo.New("http://httpbin.org")
@@ -27,7 +34,14 @@ func TestBalooJSONCustomAssertion(t *testing.T) {
 		Type("json").
 		JSON(`{"user-agent":"baloo/` + baloo.Version + `"}`).
 		VerifyJSON(func(data map[string]interface{}) error {
-			// check your json response here
+			var result UserAgent
+			err := mapstructure.Decode(data, &result)
+			if err != nil {
+				return err
+			}
+			if !strings.Contains(result.Value, "baloo") {
+				return fmt.Errorf("bad user-agent: %s, %s", result.Value, data)
+			}
 			return nil
 		}).
 		Done()
