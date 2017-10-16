@@ -13,6 +13,7 @@ before_install:
   - go get -u -v github.com/axw/gocov/gocov
   - go get -u -v github.com/mattn/goveralls
   - go get -u -v github.com/golang/lint/golint
+  - go get -u -v github.com/mitchellh/mapstructure
   - mkdir -p $GOPATH/src/gopkg.in/h2non
   - ln -s $(pwd) $GOPATH/src/gopkg.in/h2non/baloo.v2
 
