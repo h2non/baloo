@@ -1,4 +1,4 @@
-# baloo [![Build Status](https://travis-ci.org/h2non/baloo.png)](https://travis-ci.org/h2non/baloo) [![GitHub release](https://img.shields.io/badge/version-2.0-orange.svg?style=flat)](https://github.com/h2non/baloo/releases) [![GoDoc](https://godoc.org/github.com/h2non/baloo?status.svg)](https://godoc.org/github.com/h2non/baloo) [![Coverage Status](https://coveralls.io/repos/github/h2non/baloo/badge.svg?branch=master)](https://coveralls.io/github/h2non/baloo?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/baloo)](https://goreportcard.com/report/github.com/h2non/baloo)
+# baloo [![Build Status](https://travis-ci.org/h2non/baloo.png)](https://travis-ci.org/h2non/baloo) [![GitHub release](https://img.shields.io/badge/version-3.0-orange.svg?style=flat)](https://github.com/h2non/baloo/releases) [![GoDoc](https://godoc.org/github.com/h2non/baloo?status.svg)](https://godoc.org/github.com/h2non/baloo) [![Coverage Status](https://coveralls.io/repos/github/h2non/baloo/badge.svg?branch=master)](https://coveralls.io/github/h2non/baloo?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/baloo)](https://goreportcard.com/report/github.com/h2non/baloo)
 
 Expressive and versatile end-to-end HTTP API testing made easy in [Go](http://golang.org) (golang), built on top of [gentleman](https://github.com/h2non/gentleman) HTTP client toolkit.
 
@@ -27,7 +27,8 @@ Take a look to the [examples](#examples) to get started.
 
 ## Versions
 
-- [v2](https://github.com/h2non/baloo) - Latest stable version. Uses `gentleman@v2`. Recommended.
+- [v3](https://github.com/h2non/baloo) - Latest stable version with better JSON assertion. Uses `gentleman@v2`. Recommended.
+- [v2](https://github.com/h2non/baloo) - Stable version. Uses `gentleman@v2`.
 - [v1](https://github.com/h2non/baloo/tree/v1) - First version. Stable. Uses `gentleman@v1`. Actively maintained.
 
 ## Installation
