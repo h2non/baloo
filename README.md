@@ -34,7 +34,7 @@ Take a look to the [examples](#examples) to get started.
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/baloo.v2
+go get -u gopkg.in/h2non/baloo.v3
 ```
 
 ## Requirements
@@ -53,7 +53,7 @@ package simple
 import (
   "testing"
 
-  "gopkg.in/h2non/baloo.v2"
+  "gopkg.in/h2non/baloo.v3"
 )
 
 // test stores the HTTP testing client preconfigured
@@ -81,7 +81,7 @@ import (
   "net/http"
   "testing"
 
-  "gopkg.in/h2non/baloo.v2"
+  "gopkg.in/h2non/baloo.v3"
 )
 
 // test stores the HTTP testing client preconfigured
@@ -116,7 +116,7 @@ package json_schema
 import (
   "testing"
 
-  "gopkg.in/h2non/baloo.v2"
+  "gopkg.in/h2non/baloo.v3"
 )
 
 const schema = `{
@@ -153,7 +153,7 @@ import (
   "net/http"
   "testing"
 
-  "gopkg.in/h2non/baloo.v2"
+  "gopkg.in/h2non/baloo.v3"
 )
 
 // test stores the HTTP testing client preconfigured

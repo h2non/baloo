@@ -3,7 +3,7 @@ package assert_body
 import (
 	"testing"
 
-	"gopkg.in/h2non/baloo.v2"
+	"gopkg.in/h2non/baloo.v3"
 )
 
 // test stores the HTTP testing client preconfigured
