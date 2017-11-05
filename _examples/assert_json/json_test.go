@@ -5,8 +5,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/mitchellh/mapstructure"
 	baloo "gopkg.in/h2non/baloo.v3"
-	"github.com/mitchellh/mapstructure")
+)
 
 type UserAgent struct {
 	Value string `mapstructure:"user-agent"`
@@ -32,7 +33,7 @@ func TestBalooJSONCustomAssertion(t *testing.T) {
 		Status(200).
 		Type("json").
 		JSON(`{"user-agent":"baloo/` + baloo.Version + `"}`).
-		VerifyJSON(func(data map[string]interface{}) error {
+		OnJSON(func(data interface{}) error {
 			var result UserAgent
 			err := mapstructure.Decode(data, &result)
 			if err != nil {
