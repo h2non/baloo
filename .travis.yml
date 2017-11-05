@@ -15,7 +15,7 @@ before_install:
   - go get -u -v github.com/golang/lint/golint
   - go get -u -v github.com/mitchellh/mapstructure
   - mkdir -p $GOPATH/src/gopkg.in/h2non
-  - ln -s $(pwd) $GOPATH/src/gopkg.in/h2non/baloo.v2
+  - ln -s $(pwd) $GOPATH/src/gopkg.in/h2non/baloo.v3
 
 script:
   - diff -u <(echo -n) <(gofmt -s -d ./)

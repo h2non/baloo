@@ -1,4 +1,13 @@
 
+v3.0.0 / 2017-10-24
+===================
+
+  * refactor(import): update imports to v3
+  * feat(version): bump major to v3
+  * Merge pull request #17 from dvic/json-generic-assertion
+  * support asserting JSON types other than objects (fixes #16)
+  * refactor(docs): move sponsor link
+
 v2.0.0 / 2017-09-16
 ===================
 

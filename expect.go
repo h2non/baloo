@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"testing"
 
-	"gopkg.in/h2non/baloo.v2/assert"
+	"gopkg.in/h2non/baloo.v3/assert"
 )
 
 // Assertions stores global assertion functions by alias name.

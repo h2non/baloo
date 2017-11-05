@@ -5,9 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/mitchellh/mapstructure"
-	baloo "gopkg.in/h2non/baloo.v2"
-)
+	baloo "gopkg.in/h2non/baloo.v3"
+	"github.com/mitchellh/mapstructure")
 
 type UserAgent struct {
 	Value string `mapstructure:"user-agent"`
