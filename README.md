@@ -24,7 +24,7 @@ Take a look to the [examples](#examples) to get started.
 ## Versions
 
 - [v3](https://github.com/h2non/baloo) - Latest stable version with better JSON assertion. Uses `gentleman@v2`. Recommended.
-- [v2](https://github.com/h2non/baloo) - Stable version. Uses `gentleman@v2`.
+- [v2](https://github.com/h2non/baloo/tree/v2.0.0) - Stable version. Uses `gentleman@v2`.
 - [v1](https://github.com/h2non/baloo/tree/v1) - First version. Stable. Uses `gentleman@v1`. Actively maintained.
 
 ## Installation
