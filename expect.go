@@ -3,7 +3,6 @@ package baloo
 import (
 	"fmt"
 	"net/http"
-	"testing"
 
 	"gopkg.in/h2non/baloo.v3/assert"
 )
@@ -24,10 +23,15 @@ func FlushAssertFuncs() {
 	Assertions = make(map[string]assert.Func)
 }
 
+// TestingT implements part of the same interface as testing.T
+type TestingT interface {
+	Error(args ...interface{})
+}
+
 // Expect represents the HTTP expectation suite who is
 // able to define multiple assertion functions to match the response.
 type Expect struct {
-	test       *testing.T
+	test       TestingT
 	request    *Request
 	assertions []assert.Func
 }
@@ -40,7 +44,7 @@ func NewExpect(req *Request) *Expect {
 // BindTest binds the Go testing instance to the current suite.
 // In the future multiple testing interfaces can
 // be supported via adapters.
-func (e *Expect) BindTest(t *testing.T) *Expect {
+func (e *Expect) BindTest(t TestingT) *Expect {
 	e.test = t
 	return e
 }
