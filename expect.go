@@ -184,13 +184,13 @@ func (e *Expect) AssertFunc(assertion ...assert.Func) *Expect {
 
 // Done performs and asserts the HTTP response based
 // on the defined expectations.
-func (e *Expect) Done() error {
+func (e *Expect) Done() (*gentleman.Response, error) {
 	// Perform the HTTP request
 	res, err := e.request.Send()
 	if err != nil {
 		err = fmt.Errorf("request error: %s", err)
 		e.test.Error(err)
-		return err
+		return res, err
 	}
 
 	// Run assertions
@@ -199,12 +199,13 @@ func (e *Expect) Done() error {
 		e.test.Error(err)
 	}
 
-	return err
+	return res, err
 }
 
 // End is an alias to `Done()`.
 func (e *Expect) End() error {
-	return e.Done()
+	_, err := e.Done()
+	return err
 }
 
 func (e *Expect) run(res *http.Response, req *http.Request) error {
