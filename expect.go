@@ -184,7 +184,42 @@ func (e *Expect) AssertFunc(assertion ...assert.Func) *Expect {
 
 // Done performs and asserts the HTTP response based
 // on the defined expectations.
-func (e *Expect) Done() (*gentleman.Response, error) {
+func (e *Expect) Done() error {
+	// Perform the HTTP request
+	res, err := e.request.Send()
+	if err != nil {
+		err = fmt.Errorf("request error: %s", err)
+		e.test.Error(err)
+		return err
+	}
+
+	// Run assertions
+	err = e.run(res.RawResponse, res.RawRequest)
+	if err != nil {
+		e.test.Error(err)
+	}
+
+	return err
+}
+
+// End is an alias to `Done()`.
+func (e *Expect) End() error {
+	return e.Done()
+}
+
+func (e *Expect) run(res *http.Response, req *http.Request) error {
+	var err error
+	for _, assertion := range e.assertions {
+		err = assertion(res, req)
+		if err != nil {
+			break
+		}
+	}
+	return err
+}
+
+// the same as `Done` but return http response,error
+func (e *Expect) Response() (*gentleman.Response, error) {
 	// Perform the HTTP request
 	res, err := e.request.Send()
 	if err != nil {
@@ -200,21 +235,4 @@ func (e *Expect) Done() (*gentleman.Response, error) {
 	}
 
 	return res, err
-}
-
-// End is an alias to `Done()`.
-func (e *Expect) End() error {
-	_, err := e.Done()
-	return err
-}
-
-func (e *Expect) run(res *http.Response, req *http.Request) error {
-	var err error
-	for _, assertion := range e.assertions {
-		err = assertion(res, req)
-		if err != nil {
-			break
-		}
-	}
-	return err
 }
