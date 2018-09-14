@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
+
 	"gopkg.in/h2non/gentleman.v2"
 	"gopkg.in/h2non/baloo.v3/assert"
 )
