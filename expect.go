@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
-  "gopkg.in/h2non/gentleman.v2"
+	"gopkg.in/h2non/gentleman.v2"
 	"gopkg.in/h2non/baloo.v3/assert"
 )
 
@@ -218,7 +218,7 @@ func (e *Expect) run(res *http.Response, req *http.Request) error {
 	return err
 }
 
-// The same as `Done` but return http response,error
+// Send does the same as `Done()`, but it also returns the `*http.Response` along with the `error`.
 func (e *Expect) Send() (*gentleman.Response, error) {
 	// Perform the HTTP request
 	res, err := e.request.Send()
