@@ -218,8 +218,8 @@ func (e *Expect) run(res *http.Response, req *http.Request) error {
 	return err
 }
 
-// the same as `Done` but return http response,error
-func (e *Expect) Response() (*gentleman.Response, error) {
+// The same as `Done` but return http response,error
+func (e *Expect) Send() (*gentleman.Response, error) {
 	// Perform the HTTP request
 	res, err := e.request.Send()
 	if err != nil {
