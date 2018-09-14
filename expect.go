@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
-
+  "gopkg.in/h2non/gentleman.v2"
 	"gopkg.in/h2non/baloo.v3/assert"
 )
 
@@ -216,4 +216,23 @@ func (e *Expect) run(res *http.Response, req *http.Request) error {
 		}
 	}
 	return err
+}
+
+// The same as `Done` but return http response,error
+func (e *Expect) Send() (*gentleman.Response, error) {
+	// Perform the HTTP request
+	res, err := e.request.Send()
+	if err != nil {
+		err = fmt.Errorf("request error: %s", err)
+		e.test.Error(err)
+		return res, err
+	}
+
+	// Run assertions
+	err = e.run(res.RawResponse, res.RawRequest)
+	if err != nil {
+		e.test.Error(err)
+	}
+
+	return res, err
 }
