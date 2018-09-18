@@ -3,7 +3,6 @@ package baloo
 import (
 	"io"
 	"net/http"
-	"testing"
 
 	"gopkg.in/h2non/gentleman.v2"
 	"gopkg.in/h2non/gentleman.v2/context"
@@ -213,7 +212,7 @@ func (r *Request) Send() (*gentleman.Response, error) {
 }
 
 // Expect creates and returns the request test expectation suite.
-func (r *Request) Expect(t *testing.T) *Expect {
+func (r *Request) Expect(t TestingT) *Expect {
 	if r.tested {
 		t.Error("[baloo] request already tested")
 		return nil
@@ -223,7 +222,7 @@ func (r *Request) Expect(t *testing.T) *Expect {
 }
 
 // Assert is an alias to .Expect().
-func (r *Request) Assert(t *testing.T) *Expect {
+func (r *Request) Assert(t TestingT) *Expect {
 	return r.Expect(t)
 }
 
