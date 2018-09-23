@@ -2,12 +2,20 @@ package assert
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 	"testing"
+
+	"github.com/mitchellh/mapstructure"
 
 	"github.com/nbio/st"
 )
+
+type UserAgent struct {
+	Value string `mapstructure:"user-agent"`
+}
 
 type items map[string]string
 
@@ -105,4 +113,36 @@ func TestCompare(t *testing.T) {
 	st.Expect(t, compare(map[string]interface{}{"a": map[string]interface{}{"b": "c"}}, `{"a": {"b":"c"}}`), nil)
 	st.Expect(t, compare(map[string]interface{}{"a": []float64{1.1, 2.2}}, `{"a":[1.1, 2.2]}`), nil)
 	st.Expect(t, compare(map[string]interface{}{"a": 5.1}, `{"a": 5.1}`), nil)
+}
+
+func TestOnJSONCustomAssertion(t *testing.T) {
+	body := ioutil.NopCloser(bytes.NewBufferString(`{"user-agent":"baloo/v3"}`))
+	res := &http.Response{Body: body}
+	st.Expect(t, OnJSON(func(data interface{}) error {
+		var result UserAgent
+		err := mapstructure.Decode(data, &result)
+		if err != nil {
+			return err
+		}
+		if !strings.Contains(result.Value, "baloo") {
+			return fmt.Errorf("bad user-agent: %s, %s", result.Value, data)
+		}
+		return nil
+	})(res, nil), nil)
+}
+
+func TestOnJSONCustomAssertionBadResponse(t *testing.T) {
+	body := ioutil.NopCloser(bytes.NewBufferString(`{"user-agent":"toto"}`))
+	res := &http.Response{Body: body}
+	st.Expect(t, OnJSON(func(data interface{}) error {
+		var result UserAgent
+		err := mapstructure.Decode(data, &result)
+		if err != nil {
+			return err
+		}
+		if !strings.Contains(result.Value, "baloo") {
+			return fmt.Errorf("bad user-agent: %s, %s", result.Value, data)
+		}
+		return nil
+	})(res, nil), fmt.Errorf("bad user-agent: toto, map[user-agent:toto]"))
 }

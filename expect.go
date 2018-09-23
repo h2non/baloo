@@ -160,6 +160,13 @@ func (e *Expect) JSON(data interface{}) *Expect {
 	return e
 }
 
+// OnJSON  asserts the response body with the given function
+// write your own test on data
+func (e *Expect) OnJSON(fn assert.FnOnJSON) *Expect {
+	e.AssertFunc(assert.OnJSON(fn))
+	return e
+}
+
 // JSONSchema asserts the response body with the given
 // JSON schema definition.
 func (e *Expect) JSONSchema(schema string) *Expect {
@@ -201,7 +208,9 @@ func (e *Expect) Done() error {
 	// Run assertions
 	err = e.run(res.RawResponse, res.RawRequest)
 	if err != nil {
-		e.test.Error(err)
+		logerrorf(e.test, err.Error())
+		Dump(e.test, res.RawResponse)
+
 	}
 
 	return err

@@ -139,6 +139,51 @@ func TestJSONSchema(t *testing.T) {
 }
 ```
 
+
+#### JSON inline data assertion
+
+You can test JSON in body response against a function or a future.
+
+```go
+package json_schema
+
+import (
+  "testing"
+
+  "gopkg.in/h2non/baloo.v3"
+	"github.com/mitchellh/mapstructure"
+)
+
+
+type UserAgent struct {
+	Value string `mapstructure:"user-agent"`
+}
+
+// test stores the HTTP testing client preconfigured
+var test = baloo.New("http://httpbin.org")
+
+func TestJSONSchema(t *testing.T) {
+	test.Get("/user-agent").
+		SetHeader("Foo", "Bar").
+		Expect(t).
+		Status(200).
+		Type("json").
+		JSON(`{"user-agent":"baloo/` + baloo.Version + `"}`).
+		OnJSON(func(data interface{}) error {
+			var result UserAgent
+			err := mapstructure.Decode(data, &result)
+			if err != nil {
+				return err
+			}
+			if !strings.Contains(result.Value, "baloo") {
+				return fmt.Errorf("bad user-agent: %s, %s", result.Value, data)
+			}
+			return nil
+		}).
+		Done()
+}
+```
+
 #### Custom global assertion by alias
 
 ```go
