@@ -39,7 +39,7 @@ func StatusRedirect() Func {
 func StatusEqual(code int) Func {
 	return func(res *http.Response, req *http.Request) error {
 		if res.StatusCode != code {
-			return fmt.Errorf("Unexpected status code: %d != %d", res.StatusCode, code)
+			return fmt.Errorf("Unexpected status code for: %s %s => %d != %d", req.Method, req.Url.String(), res.StatusCode, code)
 		}
 		return nil
 	}
