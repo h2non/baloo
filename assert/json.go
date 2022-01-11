@@ -9,6 +9,9 @@ import (
 	"reflect"
 )
 
+// FnOnJSON callable function that take an interface{}, test this data and can return an error.
+type FnOnJSON func(interface{}) error
+
 func unmarshal(buf []byte) (interface{}, error) {
 	var data interface{}
 	if err := json.Unmarshal(buf, &data); err != nil {
@@ -22,6 +25,7 @@ func unmarshalBody(res *http.Response) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
+	res.Body = ioutil.NopCloser(bytes.NewBuffer(body))
 	if len(body) == 0 {
 		return nil, nil
 	}
@@ -101,5 +105,19 @@ func JSON(data interface{}) Func {
 		}
 
 		return compare(body, data)
+	}
+}
+
+// OnJSON extract JSON in body and call fn with result
+// write your own test function on data
+func OnJSON(fn FnOnJSON) Func {
+	return func(res *http.Response, req *http.Request) error {
+		// Read and unmarshal response body as JSON
+		body, err := unmarshalBody(res)
+		if err != nil {
+			return err
+		}
+
+		return fn(body)
 	}
 }
