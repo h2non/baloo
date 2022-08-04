@@ -3,6 +3,8 @@ package baloo
 import (
 	"fmt"
 	"net/http"
+	"path"
+	"runtime"
 
 	"gopkg.in/h2non/baloo.v3/assert"
 	"gopkg.in/h2non/gentleman.v2"
@@ -27,6 +29,8 @@ func FlushAssertFuncs() {
 // TestingT implements part of the same interface as testing.T
 type TestingT interface {
 	Error(args ...interface{})
+	Fail()
+	Logf(format string, args ...interface{})
 }
 
 // Expect represents the HTTP expectation suite who is
@@ -201,7 +205,13 @@ func (e *Expect) Done() error {
 	// Run assertions
 	err = e.run(res.RawResponse, res.RawRequest)
 	if err != nil {
-		e.test.Error(err)
+		_, fileName, line, ok := runtime.Caller(1)
+		if !ok {
+			//fallback to test.Error
+			e.test.Error(err)
+		}
+		e.test.Logf("%s:%d: %s\n", path.Base(fileName), line, err)
+		e.test.Fail()
 	}
 
 	return err
