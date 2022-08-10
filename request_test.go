@@ -190,7 +190,6 @@ func TestRequestMux(t *testing.T) {
 func TestRequestInterceptor(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		t.Fatal("Server should not be reached!")
-		fmt.Fprintln(w, "Hello, world")
 	}))
 	defer ts.Close()
 
@@ -208,7 +207,6 @@ func TestRequestInterceptor(t *testing.T) {
 	})
 	req.UseRequest(func(ctx *context.Context, h context.Handler) {
 		t.Fatal("middleware should not be called")
-		h.Next(ctx)
 	})
 
 	res, err := req.Send()
